@@ -1,0 +1,1 @@
+#MKZIP_IGNORE_FILES=( "sumvalues.py" )

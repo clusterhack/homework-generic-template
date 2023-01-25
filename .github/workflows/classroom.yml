@@ -1,0 +1,23 @@
+name: GitHub Classroom Workflow
+
+on: 
+  push:
+    branches:
+    - main
+    - master
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  autograde:
+    name: Autograding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4 
+        with:
+          python-version: '3.10'
+      - uses: clusterhack/github-autograde@v1

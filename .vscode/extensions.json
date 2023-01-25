@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    // Next two *should* be VSCode Python deps, but just to be sure...
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    // Markdown (GitHub)
+    "bierner.markdown-preview-github-styles",
+		"goessner.mdmath",
+    // For the statusbar "Zip" button
+    // XXX Is it possible to enable only for current workspace when installing?
+    // "egomobile.vscode-powertools",
+  ]
+}
