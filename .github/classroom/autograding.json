@@ -3,7 +3,7 @@
     {
       "name": "Run all unit tests",
       "setup": "",
-      "run": "python3 -m unittest -v -s . -p test_*.py",
+      "run": "python3 -m unittest -v tests/test_*.py",
       "input": "",
       "output": "",
       "comparison": "included",
@@ -13,7 +13,7 @@
     {
       "name": "Run test: test_function",
       "setup": "",
-      "run": "python3 -m unittest -v -s . -p test_*.py tests.test_template.FunctionTests.test_function",
+      "run": "python3 -m unittest -v tests.test_function_template.FunctionTests.test_function",
       "input": "",
       "output": "",
       "comparison": "included",
