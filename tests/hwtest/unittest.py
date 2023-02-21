@@ -1,4 +1,4 @@
-# (c) 2016-2022 Spiros Papadimitriou <spapadim@gmail.com>
+# (c) 2016-2023 Spiros Papadimitriou <spapadim@gmail.com>
 #
 # This file is released under the MIT License:
 #    https://opensource.org/licenses/MIT
@@ -9,7 +9,7 @@ import os
 import sys
 import unittest
 
-from .runner import runScript, runScriptFromString, parseScript, expand_path, expand_path_ext
+from .exec import runScript, runScriptFromString, parseScript, expand_path, expand_path_ext
 from contextlib import contextmanager
 from typing import Any, Optional, Union, Iterable, Sequence, ClassVar, List, Tuple, Dict
 import pickle
@@ -126,8 +126,8 @@ class HomeworkTestCase(unittest.TestCase):
     if first.shape != second.shape:
       raise self.failureException(
         'shapes %r and %r cannot be compared' % (first.shape, second.shape))
-    if (np.issubdtype(first.dtype, np.float) or
-      np.issubdtype(second.dtype, np.float)
+    if (np.issubdtype(first.dtype, np.float_) or
+      np.issubdtype(second.dtype, np.float_)
     ):
       fail_cond = np.round(np.abs(first-second), places) != 0
     else:
@@ -358,32 +358,6 @@ class HomeworkTestCase(unittest.TestCase):
             isinstance(if_stmt.test.left, ast.Name) and if_stmt.test.left.id == "__name__"):
       raise self.failureException(msg or f"Only an if __name__ == ... top-level statement is allowed at the end")
 
-  @contextmanager
-  def runNotebook(self, filename, export_varnames=(), ignore_missing=False, include_stdout=False):
-    import nbformat
-    from nbconvert.exporters import PythonExporter, export
-    from types import SimpleNamespace  # Py3 only; we do not support Py2 anymore
-
-    # Convert notebook to Python script
-    pathname = expand_path(filename)
-    with open(pathname) as fp:
-      nb = nbformat.read(fp, 4)
-    pyexp = PythonExporter()
-    pyscript, _ = export(pyexp, nb)
-    # Execute converted notebook
-    output, ns = runScriptFromString(pyscript, return_ns=True)
-
-    # Extract requested variable names from script namespace
-    nbvars = SimpleNamespace()
-    for varname in export_varnames:
-      if (not ignore_missing) and (varname not in ns):
-        raise self.failureException('Notebook did not create variable with name %s' % varname)
-      setattr(nbvars, varname, ns[varname])
-    if include_stdout:
-      setattr(nbvars, '__output__', output)
-
-    yield nbvars
-
 
 class HomeworkModuleTestCase(HomeworkTestCase):
   """
@@ -393,6 +367,8 @@ class HomeworkModuleTestCase(HomeworkTestCase):
   """
   __modulename__: ClassVar[Optional[str]] = None   # Modulename of solution script
   __attrnames__: ClassVar[Optional[List[str]]] = None  # Attributes of solution module to import directly (instead of module)
+
+  imports: ClassVar[Dict[str,Any]]
 
   @classmethod
   def setUpClass(cls):

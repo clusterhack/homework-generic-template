@@ -63,13 +63,18 @@ def expand_path_ext(filename, extensions):
 # http://stackoverflow.com/questions/11170949 (clone and patch module)
 def runScriptFromString(script, args=(), **kwargs):  # noqa: N802
   # type: (str, object, object) -> str
-  """Runs a Python script, capturing standard output and, optionally,
+  """
+  Runs a Python script, capturing standard output and, optionally,
   setting a random seed for the random library.
 
   :param script: The script program text
   :type script: str
   :keyword seed: Random seed for built-in random library
-  :type seed: int"""
+  :type seed: int
+  :keyword pathname:
+  :keyword mock_random:
+  :keyword ns_extra:
+  """
   pathname = kwargs.get('pathname', '<input>')
   save_stdout, save_argv = sys.stdout, sys.argv
   # As of PyCharm 2017.1, the new test runners also capture sys.stdout
@@ -97,6 +102,8 @@ def runScriptFromString(script, args=(), **kwargs):  # noqa: N802
           kwargs.get('mock_normalize', None))
         )
       ns['random'] = rndmodule
+    if 'ns_extra' in kwargs:
+      ns.update(kwargs['ns_extra'])
     code = compile(script, pathname, 'exec')
     exec(code, ns, ns)
     output = sysmodule.stdout.getvalue()
