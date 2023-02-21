@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   autograde:
+    # XXX Name should be "Autograding"; GitHub Classroom seems to depend on this!
     name: Autograding
     runs-on: ubuntu-latest
     steps:

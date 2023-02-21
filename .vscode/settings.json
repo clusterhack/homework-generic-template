@@ -50,17 +50,7 @@
     "-m", "util.run_script"
   ],
 
-  "ego.power-tools": {
-    "buttons": [
-      {
-        "text": "$(mortar-board) Zip",
-        "tooltip": "Zip assignment for submission",
-        "action": {
-            "type": "command",
-            "command": "workbench.action.tasks.runTask",
-            "arguments": ["Zip workspace folder for submission"]
-        }
-      }
-    ]
+  "markdownlint.config": {
+    "MD033": false  // no-inline-html
   }
 }

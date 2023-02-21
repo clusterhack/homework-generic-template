@@ -7,8 +7,5 @@
     // Markdown (GitHub)
     "bierner.markdown-preview-github-styles",
 		"goessner.mdmath",
-    // For the statusbar "Zip" button
-    // XXX Is it possible to enable only for current workspace when installing?
-    // "egomobile.vscode-powertools",
   ]
 }
