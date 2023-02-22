@@ -8,11 +8,9 @@
 from typing import ClassVar, Optional, Any, Sequence, List, Dict
 import unittest
 
-import nbformat
-from nbconvert.exporters import PythonExporter, export
 from types import SimpleNamespace
 
-from .runner import runScriptFromString, expand_path
+from .exec import runScriptFromString, expand_path
 from .unittest import HomeworkTestCase
 
 __all__ = ['runNotebook', 'HomeworkNotebookTestCase']
@@ -28,7 +26,7 @@ def __fake_get_ipython():
   global __fake_ipython
   return __fake_ipython
 
-def _skip_cell(cell: nbformat.NotebookNode) -> bool:
+def _skip_cell(cell: "nbformat.NotebookNode") -> bool:
   return 'test:skip' in getattr(cell.metadata, 'tags', ())
 
 def runNotebook(
@@ -38,6 +36,10 @@ def runNotebook(
   ignore_missing: bool = False,
   include_stdout: bool = False,
 ) -> SimpleNamespace:
+  # Import locally to minimize chance of test discovery errors
+  import nbformat
+  from nbconvert.exporters import PythonExporter, export
+
   # Read notebook
   pathname = expand_path(filename)
   with open(pathname) as fp:
