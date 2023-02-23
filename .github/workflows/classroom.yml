@@ -15,6 +15,7 @@ jobs:
   autograde:
     # XXX Name should be "Autograding"; GitHub Classroom seems to depend on this!
     name: Autograding
+    if: "!contains(github.event.head_commit.message, '[noci]')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
