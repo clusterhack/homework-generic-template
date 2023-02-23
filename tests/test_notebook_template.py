@@ -13,7 +13,7 @@ class NotebookTests(HomeworkNotebookTestCase):
   __notebookname__ = 'notebook_template.ipynb'  # XXX
   __attrnames__ = ['x', 'y']  # XXX
 
-  @grade.weight(0)  # XXX
+  @grade.score(10)  # XXX
   def test(self):
     self.assertEqual(5, self.nb.x)
     self.assertAlmostEqual(2.0, self.nb.y, places=5)

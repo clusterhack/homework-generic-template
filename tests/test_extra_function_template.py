@@ -12,12 +12,12 @@ from typing import Callable
 
 function: Callable  # XXX
 
-
+@grade.max_score(10)
 class FunctionExtraTests(HomeworkModuleTestCase):  # XXX
   __scriptname__ = "function_template.py"  # XXX
   __modulename__ = "function_template"  # XXX
   __attrnames__ = [ "function" ] # XXX
 
-  @grade.weight(0)
+  @grade.score(-10)
   def test_function(self):
     self.assertIsNotNone(function())  # XXX

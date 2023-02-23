@@ -19,6 +19,6 @@ class FunctionTests(HomeworkModuleTestCase):  # XXX
   __modulename__ = "function_template"  # XXX
   __attrnames__ = ["function"]  # XXX
 
-  @grade.weight(0)  # XXX
+  @grade.score(10)  # XXX
   def test_function(self):
     self.assertIsNotNone(function())  # XXX

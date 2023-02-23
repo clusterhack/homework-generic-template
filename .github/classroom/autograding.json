@@ -1,7 +1,16 @@
 {
   "tests": [
     {
-      "name": "Run all unit tests",
+      "type": "external",
+      "name": "Unit tests (scored)",
+      "setup": "",
+      "run": "python3 -m tests.hwtest.runner autograde.json",
+      "timeout": 2,
+      "resultsFile": "autograde.json"
+    },
+    {
+      "type": "simple",
+      "name": "Unit tests (pass/fail)",
       "setup": "",
       "run": "python3 -m unittest -v tests/test_*.py",
       "input": "",
@@ -11,6 +20,7 @@
       "points": 100
     },
     {
+      "type": "simple",
       "name": "Run test: test_function",
       "setup": "",
       "run": "python3 -m unittest -v tests.test_function_template.FunctionTests.test_function",

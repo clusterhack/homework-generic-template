@@ -1,47 +1,54 @@
-# (c) 2022- Spiros Papadimitriou <spapadim@gmail.com>
+# (c) 2023- Spiros Papadimitriou <spapadim@gmail.com>
 #
 # This file is released under the MIT License:
 #    https://opensource.org/licenses/MIT
 # This software is distributed on an "AS IS" basis,
 # WITHOUT WARRANTY OF ANY KIND, either express or implied.
 
-"""
-Module that loads unittest decorators suitable for the environment
-under which the tests are being executed. Specifically:
-- If gradescope_utils module is installed, those are used
-- If GITHUB_ACTIONS env var is true, those from .github_autograde are used
-- If neither of above, then all decorators are set to no-op (i.e., identity function)
-This allows students to run tests locally, without having to install any other packages.
-"""
-# TODO Move github_autograde to a separate project
+__all__ = ['score', 'max_score', 'sortby', 'visibility', 'tags']
 
-import os
-from typing import Literal, Optional
+from typing import Callable, List, Literal, Type, TypeVar
 
-runner: Optional[Literal['gradescope', 'github', 'local']] = None
+import inspect
 
-# Case 1: Running under GradeScope
-try:
-  from gradescope_utils.autograder_utils.decorators import weight, number, visibility, tags
-  runner = 'gradescope'
-except ImportError:
-  pass
+_Func = TypeVar("_Func", bound=Callable)
+_Class = TypeVar("_Class", bound=Type)
 
-# Case 2: Running under GitHub Actions
-if runner is None and os.getenv('GITHUB_ACTIONS') == 'true':
-  from .github_autograde import weight, number, visibility, tags
-  runner = 'github'
+def score(points: float):
+  def decorator(func: _Func) -> _Func:
+    if not inspect.isroutine(func):
+      raise TypeError('@score only applies to methods')
+    func.__score__ = points
+    return func
+  return decorator
 
-# Case 3: "local" (i.e., neither GradeScope nor GitHub VM)
-if runner is None:
-  def __noop_decorator(*args, **kwargs):
-    def decorator(func):
-      return func
-    return decorator
+def max_score(points: float):
+  def decorator(cls: _Class) -> _Class:
+    if not inspect.isclass(cls):
+      raise TypeError('@max_score only applies to classes')
+    # Validate score annotations: all must be nonpositive
+    for name, obj in inspect.getmembers(cls, predicate=inspect.isroutine):
+      if getattr(obj, '__score__', 0) > 0:
+        raise ValueError(f'Test method {name} with positive score in class {cls.__name__} with max_score not allowed')
+    # Actual class annotation
+    cls.__max_score__ = points
+    return cls
+  return decorator
 
-  weight = number = visibility = tags = __noop_decorator
-  runner = 'local'
+def sortby(key):
+  def decorator(func: _Func) -> _Func:
+    func.__sortby__ = str(key)
+    return func
+  return decorator
 
+def visibility(vis: Literal['hidden', 'visible']):
+  def decorator(func: _Func) -> _Func:
+    func.__visibility__ = vis
+    return func
+  return decorator
 
-# Exported names
-__all__ = ['weight', 'number', 'visibility', 'tags']
+def tags(*args: List[str]):
+  def decorator(func: _Func) -> _Func:
+    func.__tags__ = args
+    return func
+  return decorator
