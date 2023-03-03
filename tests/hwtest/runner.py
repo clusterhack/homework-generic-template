@@ -301,10 +301,6 @@ class AutogradeTestResult(TextTestResult):
   def addFailure(self, test: TestCase, err: SysExcInfoType) -> None:
     super().addFailure(test, err)
     # print(f'INFO: addFailure({test}, {err})\n  [{_getTestGroupInfo(test)} | {_getTestInfo(test)}]', file=_fxxx)
-  @override
-  def addError(self, test: TestCase, err: SysExcInfoType) -> None:
-    super().addError(test, err)
-    # print(f'INFO: addError({test}, {err})\n  [{_getTestGroupInfo(test)} | {_getTestInfo(test)}]', file=_fxxx)
     group_name, group_max_score = _getTestGroupInfo(test)
     test_name, test_max_score = _getTestInfo(test)
     group = self.autograde.ensure_group(group_name, group_max_score)
