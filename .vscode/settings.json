@@ -51,6 +51,7 @@
   ],
 
   "markdownlint.config": {
-    "MD033": false  // no-inline-html
+    "MD033": false,  // no-inline-html
+    "MD012": false  // no-multiple-blanks
   }
 }
