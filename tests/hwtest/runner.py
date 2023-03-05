@@ -76,7 +76,7 @@ class AutogradeTestGroup:
   @property
   def score(self) -> int:
     if self.is_subtractive:
-      return max(0, self._max_score - self._total_score)
+      return max(0, self._max_score + self._total_score)  # _total_score will be negative...
     return self._total_score
 
   @property
@@ -87,13 +87,15 @@ class AutogradeTestGroup:
 
   @max_score.setter
   def max_score(self, points: int):
+    if len(self.tests) > 0:
+      raise ValueError("Cannot modify max_score after tests have been added to group")
     self._max_score = points
 
   def add_test(self, test: AutogradeTest) -> None:
     if self.is_subtractive and test.score > 0:
       raise ValueError(f'Cannot add non-subtractive test {test.name} to subtractive group {self.name}')
     if not self.is_subtractive and test.score < 0:
-      raise ValueError(f'Cannot subtractive test {test.name} to non-subtractive group {self.name}')
+      raise ValueError(f'Cannot add subtractive test {test.name} to non-subtractive group {self.name}')
     self._total_score += test.score
     self._total_max_score += test.max_score
     self.tests.append(test)
@@ -277,6 +279,9 @@ class AutogradeTestResult(TextTestResult):
     # print(f'INFO: addSuccess({test})\n  [{_getTestGroupInfo(test)} | {_getTestInfo(test)}]', file=_fxxx)
     group_name, group_max_score = _getTestGroupInfo(test)
     test_name, test_max_score = _getTestInfo(test)
+    if test_max_score is None:
+      # Tests not decorated with @score do not participate in grading; ommit
+      return
     group = self.autograde.ensure_group(group_name, group_max_score)
     if group.is_subtractive:
       test_score = 0
@@ -290,6 +295,9 @@ class AutogradeTestResult(TextTestResult):
     # print(f'INFO: addError({test}, {err})\n  [{_getTestGroupInfo(test)} | {_getTestInfo(test)}]', file=_fxxx)
     group_name, group_max_score = _getTestGroupInfo(test)
     test_name, test_max_score = _getTestInfo(test)
+    if test_max_score is None:
+      # Tests not decorated with @score do not participate in grading; ommit
+      return
     group = self.autograde.ensure_group(group_name, group_max_score)
     if group.is_subtractive:
       test_score = test_max_score
@@ -303,6 +311,9 @@ class AutogradeTestResult(TextTestResult):
     # print(f'INFO: addFailure({test}, {err})\n  [{_getTestGroupInfo(test)} | {_getTestInfo(test)}]', file=_fxxx)
     group_name, group_max_score = _getTestGroupInfo(test)
     test_name, test_max_score = _getTestInfo(test)
+    if test_max_score is None:
+      # Tests not decorated with @score do not participate in grading; ommit
+      return
     group = self.autograde.ensure_group(group_name, group_max_score)
     if group.is_subtractive:
       test_score = test_max_score
@@ -355,5 +366,6 @@ if __name__ == '__main__':
   start_dir = len(sys.argv) > 2 and sys.argv[2] or '.'
   pattern = len(sys.argv) > 3 and sys.argv[3] or 'test_*.py'
   result = runAutograding(result_file, start_dir=start_dir, pattern=pattern)
+  # print(f'INFO: Autograde result = {result.autograde}', file=_fxxx)
   sys.exit(1 if result.errors or result.failures else 0)
 
