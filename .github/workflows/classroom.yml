@@ -23,3 +23,9 @@ jobs:
         with:
           python-version: '3.10'
       - uses: clusterhack/github-autograde@v2
+      - uses: actions/upload-artifact@v3
+        with:
+          name: autograde
+          path: autograde.json
+          if-no-files-found: ignore
+          retention-days: 30
