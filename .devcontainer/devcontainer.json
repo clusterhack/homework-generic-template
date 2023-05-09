@@ -64,8 +64,10 @@
 
 				// UI
 				"window.title": "${dirty}${activeEditorMedium}${separator}${rootName}",
+				"window.autoDetectColorScheme": true,
 				"workbench.tree.indent": 12,
-				"explorer.excludeGitIgnore": true
+				"explorer.excludeGitIgnore": true,
+				"extensions.ignoreRecommendations": true  // Installed (below) anyway, don't bug user...
 			},
 			"extensions": [
 				"ms-python.python",
