@@ -13,7 +13,19 @@ from types import SimpleNamespace
 from .exec import runScriptFromString, expand_path
 from .unittest import HomeworkTestCase
 
-__all__ = ['runNotebook', 'HomeworkNotebookTestCase']
+__all__ = ['NotebookNamespace', 'runNotebook', 'HomeworkNotebookTestCase']
+
+
+class NotebookNamespace(SimpleNamespace):
+  """
+  Class that adds some minor convenience methods/operations to SimpleNamespace.
+  """
+
+  def __contains__(self, attr):
+    return attr in self.__dict__
+
+  def __iter__(self):
+    return self.__dict__.keys()
 
 
 class __FakeIPython:
@@ -26,6 +38,7 @@ def __fake_get_ipython():
   global __fake_ipython
   return __fake_ipython
 
+
 def _skip_cell(cell: "nbformat.NotebookNode") -> bool:
   return 'test:skip' in getattr(cell.metadata, 'tags', ())
 
@@ -35,7 +48,7 @@ def runNotebook(
   *,
   ignore_missing: bool = False,
   include_stdout: bool = False,
-) -> SimpleNamespace:
+) -> NotebookNamespace:
   # Import locally to minimize chance of test discovery errors
   import nbformat
   from nbconvert.exporters import PythonExporter, export
@@ -55,7 +68,7 @@ def runNotebook(
   output, ns = runScriptFromString(pyscript, return_ns=True, ns_extra=ns_extra)
 
   # Extract requested variable names from script namespace
-  nbvars = SimpleNamespace()
+  nbvars = NotebookNamespace()
   for varname in export_varnames:
     if (not ignore_missing) and (varname not in ns):
       raise RuntimeError('Notebook did not create variable with name %s' % varname)
