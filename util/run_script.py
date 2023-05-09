@@ -11,7 +11,7 @@ import warnings
 
 from .common import msg, hr, vscode_load_settings
 
-from tests.runner import runScript, expand_path
+from tests.hwtest.runner import runScript, expand_path
 
 
 # Available variables for prompt string specs:
