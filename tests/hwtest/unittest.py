@@ -259,11 +259,12 @@ class HomeworkTestCase(unittest.TestCase):
       yield
 
   @contextmanager
-  def assertUnmodified(self, *args):  # noqa: N802
+  def assertUnmodified(self, *args, deep=False):  # noqa: N802
     if not args:
       raise TypeError("assertUnmodified() requires at least one argument")
     import copy
-    arg_copies = [copy.copy(a) for a in args]
+    copy_fn = copy.deepcopy if deep else copy.copy
+    arg_copies = [copy_fn(a) for a in args]
     if len(args) == 1:
       yield args[0]  # "Unwrap" singleton, for convenience
     else:
