@@ -315,6 +315,21 @@ class HomeworkTestCase(unittest.TestCase):
           print(f"DEBUG: About to setattr varname {varname}")
           setattr(sys.modules[modname], varname, ref)
 
+  @contextmanager
+  def assertWithoutBuiltin(self, fn_name: str):
+    # XXX Be *very* careful to limit context as much as possible; also
+    #   we intentionally don't allow altering more than one builtin at once...
+    import builtins
+    saved_fn = getattr(builtins, fn_name)
+    # TODO? Verify saved_fn is actually a function
+    def fail(*args, **kwargs):
+      raise self.failureException(f"Called built-in {fn_name}() function")
+    try:
+      setattr(builtins, fn_name, fail)
+      yield
+    finally:
+      setattr(builtins, fn_name, saved_fn)
+
   def runScript(self, filename: Optional[str] = None, *args, **kwargs):  # noqa: N802
     filename = filename or self.__scriptname__
     if filename:
