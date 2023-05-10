@@ -106,6 +106,8 @@ class HomeworkNotebookTestCase(HomeworkTestCase):
       raise RuntimeError(f"{cls.__name__}.__scriptname__ is set; please report bug")
     # Execute notebook
     try:
+      if hasattr(cls, "setUpNotebook"): cls.setUpNotebook()
       cls.nb = runNotebook(cls.__notebookname__, cls.__attrnames__, include_stdout = True)
+      if hasattr(cls, "tearDownNotebook"): cls.tearDownNotebook()
     except FileNotFoundError:
       raise cls.failureException(f"Notebook file {cls.__notebookname__} not found!")
