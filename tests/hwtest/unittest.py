@@ -411,7 +411,8 @@ class HomeworkModuleTestCase(HomeworkTestCase):
   def __check_import(self):
     # Check that import succeeded
     if self.__modulename__:
-      self.assertIsNone(self.import_exc, msg=f"Importing your solution file failed with:\n{self.import_exc!r}")
+      if self.import_exc is not None:
+        raise self.failureException(f"Importing your solution file failed with:\n{self.import_exc!r}")
     # Check that all required attribute names (if any) were found
     if self.__attrnames__:
       for attr in self.__attrnames__:

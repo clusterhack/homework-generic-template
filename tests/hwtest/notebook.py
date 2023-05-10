@@ -108,6 +108,23 @@ class HomeworkNotebookTestCase(HomeworkTestCase):
     try:
       if hasattr(cls, "setUpNotebook"): cls.setUpNotebook()
       cls.nb = runNotebook(cls.__notebookname__, cls.__attrnames__, include_stdout = True)
-      if hasattr(cls, "tearDownNotebook"): cls.tearDownNotebook()
-    except FileNotFoundError:
-      raise cls.failureException(f"Notebook file {cls.__notebookname__} not found!")
+      cls.nb_exc = None
+    except Exception as exc:
+      cls.nb_exc = exc
+
+  @classmethod
+  def tearDownClass(cls):
+    if cls.nb_exc is None and hasattr(cls, "tearDownNotebook"):
+      cls.tearDownNotebook()
+
+  def __check_exec(self):
+    # Check that execution of notebook succeeded
+    if self.nb_exc is not None:
+      raise self.failureException(f"Executing your notebook failed with:\n{self.nb_exc!r}")
+    # Check that all required attribute names were found
+    for attr in self.__attrnames__:
+      if attr not in self.nb:
+        raise self.failureException(f"Your notebook does not define {attr}")
+
+  def setUp(self):
+    self.__check_exec()
