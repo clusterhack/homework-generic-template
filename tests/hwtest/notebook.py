@@ -38,6 +38,9 @@ def __fake_get_ipython():
   global __fake_ipython
   return __fake_ipython
 
+def __fake_display(*args, **kwargs):
+  pass
+
 
 def _skip_cell(cell: "nbformat.NotebookNode") -> bool:
   return 'test:skip' in getattr(cell.metadata, 'tags', ())
@@ -64,7 +67,10 @@ def runNotebook(
   pyscript, _ = export(pyexp, nb)
   # print("DBG pyscript:\n" + pyscript + "\n**********************")
   # Execute converted notebook
-  ns_extra = {'get_ipython': __fake_get_ipython}  # So converted magics don't fail...
+  ns_extra = {
+    'get_ipython': __fake_get_ipython,  # So converted magics don't fail...
+    'display': __fake_display,  # So display() doesn't fail...
+  }
   output, ns = runScriptFromString(pyscript, return_ns=True, ns_extra=ns_extra)
 
   # Extract requested variable names from script namespace
