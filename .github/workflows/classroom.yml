@@ -17,6 +17,9 @@ jobs:
     name: Autograding
     if: "!contains(github.event.head_commit.message, '[noci]')"
     runs-on: ubuntu-latest
+    concurrency:
+      group: autograde  # Disallow concurrent autograde job runs
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4 
