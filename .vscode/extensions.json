@@ -1,11 +1,12 @@
 {
   "recommendations": [
     "ms-python.python",
-    // Next two *should* be VSCode Python deps, but just to be sure...
     "ms-python.vscode-pylance",
+    "donjayamanne.python-environment-manager",
     "ms-toolsai.jupyter",
-    // Markdown (GitHub)
+    //"ms-vscode-remote.remote-containers",
     "bierner.markdown-preview-github-styles",
 		"goessner.mdmath",
+    //"Equinusocio.vsc-material-theme",
   ]
 }

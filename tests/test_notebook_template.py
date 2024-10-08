@@ -5,8 +5,8 @@
 # This software is distributed on an "AS IS" basis,
 # WITHOUT WARRANTY OF ANY KIND, either express or implied.
 
-from .hwtest.notebook import HomeworkNotebookTestCase
-from .hwtest import autograde as grade
+from hwk.test.notebook import HomeworkNotebookTestCase
+from hwk.test import autograde as grade
 
 
 class NotebookTests(HomeworkNotebookTestCase):

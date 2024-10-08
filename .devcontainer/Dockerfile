@@ -1,8 +1,8 @@
 ############################################################################
 ##        Base image
 
-ARG VARIANT="3.10-bullseye"
-FROM mcr.microsoft.com/devcontainers/python:0-${VARIANT}
+ARG VARIANT="3.12-bookworm"
+FROM mcr.microsoft.com/devcontainers/python:${VARIANT}
 
 # [Optional] Uncomment this section to install additional OS packages.
 #   gawk: For convenience (mkzip.sh), even though not needed by students
@@ -24,7 +24,7 @@ USER ${USERNAME}:${USERNAME}
 ARG VENV_PATH="/home/${USERNAME}/venv"
 
 # Create virtualenv and install required packages (via pip)
-COPY --chown=${USERNAME}:${USERNAME} requirements.txt requirements-dev.txt /tmp/pip-tmp/
+COPY --chown=${USERNAME}:${USERNAME} requirements.txt .devcontainer/requirements-dev.txt /tmp/pip-tmp/
 RUN python -m venv /home/vscode/venv \
     && ${VENV_PATH}/bin/pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt -r /tmp/pip-tmp/requirements-dev.txt \
     && rm -rf /tmp/pip-tmp
@@ -33,6 +33,11 @@ RUN python -m venv /home/vscode/venv \
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 # [Add-on] Tweak zsh configuration
-# RUN sed -i -E 's/^ZSH_THEME=.*$/ZSH_THEME="agnoster"/g' /home/${USERNAME}/.zshrc
+#   These edits have the be before oh-my-zsh.sh is sourced
+RUN sed -i -E 's/^ZSH_THEME=.*$/ZSH_THEME="agnoster"/g' /home/${USERNAME}/.zshrc
 RUN sed -i -E 's/^plugins=.*$/plugins=(git zsh-autosuggestions)/g' /home/${USERNAME}/.zshrc \
     && sed -i -E 's/^# (zstyle '"'"':omz:update'"'"' mode disabled.*)$/\1/g' /home/${USERNAME}/.zshrc
+#   Additional tweaks can be appended at the end of the file
+COPY --chown=${USERNAME}:${USERNAME} .devcontainer/custom.zshrc /tmp/
+RUN cat /tmp/custom.zshrc >>/home/${USERNAME}/.zshrc \
+    && rm -f /tmp/custom.zshrc

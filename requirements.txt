@@ -1,3 +1,4 @@
+pyhwk @ git+https://github.com/clusterhack/pyhwk@main
 #pytest  # Future use
 #pandas
 #matplotlib

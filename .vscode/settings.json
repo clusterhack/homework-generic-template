@@ -2,7 +2,10 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "workbench.tree.indent": 12,
-
+  "workbench.editorAssociations": {
+    "README.md": "vscode.markdown.preview.editor"
+  },
+  
   "explorer.excludeGitIgnore": true,
   // Hide additional files (to minimize confusion)  // XXX
   // "files.exclude": {
@@ -10,17 +13,18 @@
   //   ".devcontainer/": true,
   //   ".github/": true,
   //   ".vscode/": true,
-  //   ".mkzip.rc": true,
-  //   "mspythonconfig.json": true,
+  //   // "mspythonconfig.json": true, // Hiding this will (may?) cause Python extension to not activate
   //   "requirements*.txt": true,
-  //   "util/": true,
   // },
 
   // "terminal.integrated.inheritEnv": false,  // User-settings only
   "python.terminal.activateEnvironment": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
+  "terminal.integrated.persistentSessionReviveProcess": "never",  // Minimize student confusion (venv not activating on restore)
 
   "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.pylintArgs": [
@@ -47,11 +51,12 @@
   "python.testing.pytestEnabled": false,
 
   "python.terminal.launchArgs": [
-    "-m", "util.run_script"
+    "-m", "hwk.util.run_script"
   ],
 
   "markdownlint.config": {
     "MD033": false,  // no-inline-html
-    "MD012": false  // no-multiple-blanks
+    "MD012": false,  // no-multiple-blanks
+    "MD041": false  // first-line-h1
   }
 }

@@ -5,8 +5,8 @@
 # This software is distributed on an "AS IS" basis,
 # WITHOUT WARRANTY OF ANY KIND, either express or implied.
 
-from .hwtest.unittest import HomeworkModuleTestCase
-from .hwtest import autograde as grade
+from hwk.test.unittest import HomeworkModuleTestCase
+from hwk.test import autograde as grade
 
 from typing import Callable
 
