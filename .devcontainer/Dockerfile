@@ -29,6 +29,11 @@ RUN python -m venv /home/vscode/venv \
     && ${VENV_PATH}/bin/pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt -r /tmp/pip-tmp/requirements-dev.txt \
     && rm -rf /tmp/pip-tmp
 
+# Configure git pull.rebase
+#   This is a workaround for GitHub Classroom: it occasionally takes a while to set up repo,
+#   so if students clone it before the bots are done, pushing back to GitHub will fail...
+RUN git config --global pull.rebase true
+
 # [Add-on] Install zsh-autosuggestions plugin
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
