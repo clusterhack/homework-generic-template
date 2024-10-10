@@ -65,6 +65,7 @@
 
         // Git / GitHub
         "git.autofetch": true,
+        "git.rebaseWhenSync": true,
 
         // UI
         "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}",
