@@ -14,6 +14,6 @@ class NotebookTests(HomeworkNotebookTestCase):
   __attrnames__ = ['x', 'y']  # XXX
 
   @grade.score(10)  # XXX
-  def test(self):
+  def test_notebook(self):
     self.assertEqual(5, self.nb.x)
     self.assertAlmostEqual(2.0, self.nb.y, places=5)

@@ -11,6 +11,6 @@ from hwk.test import autograde as grade
 
 class ScriptTests(HomeworkTestCase):
   @grade.score(10)  # XXX
-  def test(self):
+  def test_script(self):
     result = self.runScript("script_template.py")  # XXX
     self.assertEqual('Hello, world!\n', result.stdout)

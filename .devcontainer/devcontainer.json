@@ -2,19 +2,19 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
   "name": "Python 3",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "..",
-    "args": {
-      // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
-      // Append -bullseye or -buster to pin to an OS version.
-      // Use -bullseye variants on local on arm64/Apple Silicon.
-      "VARIANT": "3.12-bookworm"
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/clusterhack/devcontainer-features/ohmyzsh-custom:1": {
+      "theme": "agnoster",
+      "plugins": "git virtualenv zsh-autosuggestions zsh-syntax-highlighting",
+      "disableAutoupdate": true,
+      "extraAgnosterCustomizations": ".devcontainer/agnoster-custom.zsh"
     }
   },
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
-  },
+
+  "remoteUser": "vscode",
+  "updateContentCommand": "python -m venv /home/vscode/venv && /home/vscode/venv/bin/pip --disable-pip-version-check --no-cache-dir install -r requirements.txt -r .devcontainer/requirements-dev.txt",
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -86,8 +86,6 @@
       ]
     }
   },
-
-  "remoteUser": "vscode",
 
   "containerEnv": {
     // Set timezone
