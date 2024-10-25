@@ -2,34 +2,12 @@
   "tests": [
     {
       "type": "external",
-      "name": "Unit tests (scored)",
+      "name": "Unit tests",
       "setup": "",
-      "run": "python3 -m tests.hwtest.runner autograde.json",
+      "run": "python3 -m hwk.test.runner autograde.json",
       "timeout": 2,
       "resultFile": "autograde.json",
       "keepResultFile": true
-    },
-    {
-      "type": "simple",
-      "name": "Unit tests (pass/fail)",
-      "setup": "",
-      "run": "python3 -m unittest -v tests/test_*.py",
-      "input": "",
-      "output": "",
-      "comparison": "included",
-      "timeout": 2,
-      "points": 100
-    },
-    {
-      "type": "simple",
-      "name": "Run test: test_function",
-      "setup": "",
-      "run": "python3 -m unittest -v tests.test_function_template.FunctionTests.test_function",
-      "input": "",
-      "output": "",
-      "comparison": "included",
-      "timeout": 1,
-      "points": 1
     }
   ]
 }
