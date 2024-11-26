@@ -1,7 +1,8 @@
-pyhwk @ git+https://github.com/clusterhack/pyhwk@main
-#pytest  # Future use
+pyhwk [snoop] @ git+https://github.com/clusterhack/pyhwk@main
+##pytest  # Future use
 #pandas
 #matplotlib
-#jupyter
+##jupyter  # Not typically necessary for unittest action
 #ipywidgets
 #nbclient
+#nbconvert

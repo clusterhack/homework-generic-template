@@ -1,3 +1,3 @@
 # Additional development requirements
 ipython
-jupyter
+#jupyter
