@@ -26,7 +26,7 @@
   "terminal.integrated.persistentSessionReviveProcess": "never",  // Minimize student confusion (venv not activating on restore)
 
   "python.languageServer": "Pylance",
-  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "off",
 
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
