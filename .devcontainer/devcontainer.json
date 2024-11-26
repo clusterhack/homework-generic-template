@@ -27,6 +27,10 @@
     "vscode": {
       "settings": {
         // Python paths
+        // Python paths
+        "python.venvFolders": [
+          "venv"
+        ],
         "python.defaultInterpreterPath": "/home/vscode/venv/bin/python",
         "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
         "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
@@ -40,7 +44,19 @@
         "jupyter.kernels.filter": [
           {
             "type": "pythonEnvironment",
+            "path": "/bin/python3"
+          },
+          {
+            "type": "pythonEnvironment",
             "path": "/usr/bin/python3"
+          },
+          {
+            "type": "pythonEnvironment",
+            "path": "/usr/local/bin/python3"
+          },
+          {
+            "type": "pythonEnvironment",
+            "path": "/usr/local/bin/python"
           }
         ],
 
