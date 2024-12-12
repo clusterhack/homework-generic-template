@@ -14,7 +14,7 @@
   },
 
   "remoteUser": "vscode",
-  "updateContentCommand": "python -m venv /home/vscode/venv && /home/vscode/venv/bin/pip --disable-pip-version-check --no-cache-dir install -r requirements.txt -r .devcontainer/requirements-dev.txt",
+  "updateContentCommand": "exec /bin/bash .devcontainer/update-content.sh",
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
