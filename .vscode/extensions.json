@@ -5,6 +5,7 @@
     "donjayamanne.python-environment-manager",
     //"ms-toolsai.jupyter",
     //"ms-vscode-remote.remote-containers",
+    "oderwat.indent-rainbow",
     "bierner.markdown-preview-github-styles",
 		"goessner.mdmath",
     //"Equinusocio.vsc-material-theme",

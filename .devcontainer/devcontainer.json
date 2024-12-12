@@ -92,6 +92,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         //"ms-toolsai.jupyter",
+        "oderwat.indent-rainbow",
         "bierner.markdown-preview-github-styles",
         "goessner.mdmath",
         "donjayamanne.python-environment-manager",
