@@ -8,7 +8,9 @@
 
   "git.autofetch": true,
   "git.rebaseWhenSync": true,
-  
+  "git.useEditorAsCommitInput": false,  // Causes too many "support requests", despite prominent admonition..
+  "git.openRepositoryInParentFolders": "never",
+
   "explorer.excludeGitIgnore": true,
   // Hide additional files (to minimize confusion)  // XXX
   // "files.exclude": {
