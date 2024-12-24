@@ -99,6 +99,7 @@
         // Under evaluation:
         // "charliermarsh.ruff",
         // "ms-toolsai.datawrangler",
+        "github.copilot",
         "MS-vsliveshare.vsliveshare"  // only really needed by instructor, but..
       ]
     }
