@@ -27,10 +27,7 @@
     "vscode": {
       "settings": {
         // Python paths
-        // Python paths
-        "python.venvFolders": [
-          "venv"
-        ],
+        "python.venvPath": "/home/vscode",  // Attempted workaround for failure to select defaultInterpreterPath...
         "python.defaultInterpreterPath": "/home/vscode/venv/bin/python",
         "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
         "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
