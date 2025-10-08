@@ -4,7 +4,7 @@ set -e
 msg() { echo "$@" 1>&2; }
 
 # Install Python requirements
-msg "## Installing Python requirements..."
+msg -e "\e[31;1m## Installing Python requirements...\e[0m"
 (
   python -m venv /home/vscode/venv && \
   /home/vscode/venv/bin/pip --disable-pip-version-check --no-cache-dir \
@@ -12,7 +12,7 @@ msg "## Installing Python requirements..."
 )
 
 # Install IPython default profile
-msg "## Installing IPython profile configuration"
+msg -e "\e[31;1m## Installing IPython profile configuration\e[0m"
 mkdir -p /home/vscode/.ipython/profile_default
 cat >/home/vscode/.ipython/profile_default/ipython_config.py <<"EOF"
 c = get_config()
