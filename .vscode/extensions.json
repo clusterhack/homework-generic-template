@@ -2,7 +2,7 @@
   "recommendations": [
     "ms-python.python",
     "ms-python.vscode-pylance",
-    "donjayamanne.python-environment-manager",
+    "ms-python.vscode-python-envs",
     //"ms-toolsai.jupyter",
     //"ms-vscode-remote.remote-containers",
     "oderwat.indent-rainbow",

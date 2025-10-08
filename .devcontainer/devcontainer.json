@@ -95,7 +95,7 @@
         "oderwat.indent-rainbow",
         "bierner.markdown-preview-github-styles",
         "goessner.mdmath",
-        "donjayamanne.python-environment-manager",
+        "ms-python.vscode-python-envs",
         // Under evaluation:
         // "charliermarsh.ruff",
         // "ms-toolsai.datawrangler",
