@@ -64,6 +64,11 @@
         "python.linting.flake8Enabled": false,
         "python.testing.promptToConfigure": false,
 
+        // Copilot
+        "github.copilot.enable": {
+          "python": false
+        },
+
         // Editor
         "editor.tabSize": 2,
         "editor.insertSpaces": true,

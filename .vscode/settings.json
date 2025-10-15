@@ -30,6 +30,10 @@
   "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "off",
 
+  "github.copilot.enable": {
+    "python": false
+  },
+
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.pylintArgs": [
